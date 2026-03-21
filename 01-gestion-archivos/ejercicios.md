@@ -168,3 +168,111 @@ find busca en tiempo real recorriendo el arbol de directorios.
 Los inodes son los identificadores reales de archivos en Linux —
 el nombre es solo una etiqueta que apunta al inode.
 2>/dev/null es una redireccion de errores — el 2 representa stderr.
+
+## Clase 4 -Vim, el editor del sysadmin
+
+## Por que Vim y no otro editor
+
+Vim esta disponible en absolutamente en todos los sistemas Linux y Unix.
+En servidores remotos sin interfaz grafica es el unico editor disponible.
+El examen RHCSA solo permite Vim - dominarlo es obligatorio.
+
+### Los tres modos fundamentales
+
+Modo Normal: donde arranca Vim siempre. Las teclas ejecutan comandos.
+Modo Insercion: donde se escribe texto. Se entra con i y se sale con ESC.
+Modo Comando: donde se guarda, sale y busca. Se entra con : desde Normal.
+Regla absoluta: ESC siempre lleva de vuelta al Modo Normal.
+
+### Navegacion en Modo Normal
+
+h j k l  — izquierda, abajo, arriba, derecha
+0        — inicio de linea
+$        — final de linea
+gg       — primera linea del archivo
+G        — ultima linea del archivo
+w        — siguiente palabra
+b        — palabra anterior
+:N       — ir directamente a la linea N
+Ctrl+g   — ver linea actual y total de lineas
+numero+comando — repetir comando N veces (5j baja 5 lineas, 4dd elimina 4)
+
+### Edicion en Modo Normal
+
+dd  — elimina linea completa (queda en portapapeles de Vim)
+yy  — copia linea completa (yank)
+p   — pega debajo de la linea actual
+P   — pega encima de la linea actual
+u   — deshace el ultimo cambio
+Ctrl+r — rehace lo que se deshizo
+x   — elimina el caracter bajo el cursor
+r   — reemplaza un solo caracter
+o   — abre linea nueva abajo y entra a insercion
+O   — abre linea nueva arriba y entra a insercion
+A   — va al final de la linea y entra a insercion
+I   — va al inicio de la linea y entra a insercion
+
+Importante: mayuscula != minuscula en Vim
+p pega debajo, P pega encima
+o abre abajo, O abre arriba
+s sustituye caracter, S elimina linea entera
+
+### Busqueda
+
+/palabra  — busca hacia adelante
+?palabra  — busca hacia atras
+n         — siguiente coincidencia
+N         — coincidencia anterior
+*         — busca la palabra bajo el cursor
+:noh      — apaga el resaltado de busqueda
+
+### Reemplazo — estructura del comando
+
+:[rango]s/[buscar]/[reemplazar]/[opciones]
+
+Rangos:
+  sin rango = solo linea actual donde esta el cursor
+  %         = todo el archivo
+
+Opciones:
+  sin opcion = primera ocurrencia de la linea actual
+  g          = todas las ocurrencias del archivo sin preguntar
+  gc         = todas las ocurrencias preguntando una por una (y/n/a/q/l)
+  i          = ignora mayusculas al buscar
+
+Ejemplos reales:
+  :s/^#PermitRootLogin/PermitRootLogin/   <- solo linea actual
+  :%s/Rocky/RHEL/g                        <- todo el archivo sin preguntar
+  :%s/Rocky/RHEL/gc                       <- todo el archivo preguntando
+  :%s/^#Puerto/Puerto/                    <- el ^ ancla al inicio de linea
+
+### Guardar y salir
+
+:w   — guardar sin salir
+:q   — salir (solo si no hay cambios)
+:wq  — guardar y salir
+:q!  — salir sin guardar (el ! fuerza la salida)
+
+### Configuracion personal — .vimrc
+
+~/.vimrc es el archivo de configuracion personal de Vim.
+Se carga automaticamente cada vez que abres Vim.
+Con sudo vim hay que copiar el .vimrc al home de root:
+sudo cp ~/.vimrc /root/.vimrc
+
+Configuraciones utiles aplicadas:
+set number         — numeros de linea absolutos
+set relativenumber — numeros relativos al cursor para saltar lineas rapido
+set hlsearch       — resalta coincidencias de busqueda
+set incsearch      — busqueda incremental mientras escribes
+syntax on          — colores de sintaxis segun tipo de archivo
+
+### Aprendizaje clave
+
+En Vim mayuscula y minuscula son comandos completamente distintos.
+Un error comun es entrar a modo insercion sin darse cuenta con o, O, A, I.
+La solucion siempre es ESC — vuelve al Modo Normal desde cualquier estado.
+El .vimrc convierte Vim en un editor personalizado — en el RHCSA puedo
+configurarlo antes de empezar para trabajar mas comodo.
+El rango determina donde opera el reemplazo — sin % solo la linea actual,
+con % todo el archivo.
