@@ -104,6 +104,8 @@ rm -r dir_prueba
 La diferencia entre > y >> puede destruir un archivo de configuracion
 en produccion. Siempre hacer backup antes de modificar archivos criticos.
 rm -rf es irreversible — usarlo con extrema precaucion.
+
+
 ---
 
 ## Clase 3 — Busqueda con find
