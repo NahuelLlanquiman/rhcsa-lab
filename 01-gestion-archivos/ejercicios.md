@@ -199,7 +199,7 @@ Ctrl+g   — ver linea actual y total de lineas
 numero+comando — repetir comando N veces (5j baja 5 lineas, 4dd elimina 4)
 ```
 ### Edicion en Modo Normal
-
+```bash
 dd  — elimina linea completa (queda en portapapeles de Vim)
 yy  — copia linea completa (yank)
 p   — pega debajo de la linea actual
@@ -217,18 +217,19 @@ Importante: mayuscula != minuscula en Vim
 p pega debajo, P pega encima
 o abre abajo, O abre arriba
 s sustituye caracter, S elimina linea entera
-
+```
 ### Busqueda
-
+``` bash
 /palabra  — busca hacia adelante
 ?palabra  — busca hacia atras
 n         — siguiente coincidencia
 N         — coincidencia anterior
 *         — busca la palabra bajo el cursor
 :noh      — apaga el resaltado de busqueda
+```
 
 ### Reemplazo — estructura del comando
-
+```bash
 :[rango]s/[buscar]/[reemplazar]/[opciones]
 
 Rangos:
@@ -246,14 +247,14 @@ Ejemplos reales:
   :%s/Rocky/RHEL/g                        <- todo el archivo sin preguntar
   :%s/Rocky/RHEL/gc                       <- todo el archivo preguntando
   :%s/^#Puerto/Puerto/                    <- el ^ ancla al inicio de linea
-
+```
 ### Guardar y salir
-
+```bash
 :w   — guardar sin salir
 :q   — salir (solo si no hay cambios)
 :wq  — guardar y salir
 :q!  — salir sin guardar (el ! fuerza la salida)
-
+```
 ### Configuracion personal — .vimrc
 
 ~/.vimrc es el archivo de configuracion personal de Vim.
