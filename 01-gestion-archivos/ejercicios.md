@@ -100,10 +100,10 @@ rm -r dir_prueba
 ```
 
 ### Aprendizaje clave
+
 La diferencia entre > y >> puede destruir un archivo de configuracion
 en produccion. Siempre hacer backup antes de modificar archivos criticos.
 rm -rf es irreversible — usarlo con extrema precaucion.
-
 ---
 
 ## Clase 3 — Busqueda con find
@@ -185,6 +185,7 @@ Modo Comando: donde se guarda, sale y busca. Se entra con : desde Normal.
 Regla absoluta: ESC siempre lleva de vuelta al Modo Normal.
 
 ### Navegacion en Modo Normal
+``` bash
 
 h j k l  — izquierda, abajo, arriba, derecha
 0        — inicio de linea
@@ -196,7 +197,7 @@ b        — palabra anterior
 :N       — ir directamente a la linea N
 Ctrl+g   — ver linea actual y total de lineas
 numero+comando — repetir comando N veces (5j baja 5 lineas, 4dd elimina 4)
-
+```
 ### Edicion en Modo Normal
 
 dd  — elimina linea completa (queda en portapapeles de Vim)
