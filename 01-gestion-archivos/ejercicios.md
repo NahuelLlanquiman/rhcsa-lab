@@ -256,7 +256,7 @@ Ejemplos reales:
 :q!  — salir sin guardar (el ! fuerza la salida)
 ```
 ### Configuracion personal — .vimrc
-
+``` bash
 ~/.vimrc es el archivo de configuracion personal de Vim.
 Se carga automaticamente cada vez que abres Vim.
 Con sudo vim hay que copiar el .vimrc al home de root:
@@ -268,7 +268,7 @@ set relativenumber — numeros relativos al cursor para saltar lineas rapido
 set hlsearch       — resalta coincidencias de busqueda
 set incsearch      — busqueda incremental mientras escribes
 syntax on          — colores de sintaxis segun tipo de archivo
-
+```
 ### Aprendizaje clave
 
 En Vim mayuscula y minuscula son comandos completamente distintos.
