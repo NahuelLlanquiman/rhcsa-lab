@@ -47,7 +47,7 @@ chmod 600 privado.txt      # rw-------
 
 ```
 
-###chown — cambiar dueño y grupo
+### chown — cambiar dueño y grupo
 ```bash
 
 # Cambiar solo el grupo (requiere sudo si no eres miembro del grupo)
@@ -60,7 +60,7 @@ sudo chown root:root archivo.txt
 sudo chown admin:admin archivo.txt
 
 ```
-#Aprendizaje Clave
+Aprendizaje Clave
 Aprendi que sin sudo solo puedo cambiar el grupo a uno donde
 yo sea miembro. Para cambiar a grupos ajenos necesito sudo.
 id y groups — ver identidad del usuario
@@ -85,7 +85,7 @@ uid=0 siempre es root. Los usuarios normales empiezan en uid=1000.
 
 
 
-###Permisos especiales — SUID
+### Permisos especiales — SUID
 
 Descubri la s en /usr/bin/sudo:
 ```bash
