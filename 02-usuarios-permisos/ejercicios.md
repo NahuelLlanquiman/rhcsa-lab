@@ -99,7 +99,7 @@ del dueño, no del usuario que lo ejecuta. Como sudo es dueño root
 y tiene SUID, cuando ejecuto sudo el proceso corre como root
 aunque yo sea admin. Sin SUID sudo simplemente no funcionaria.
 
-###umask — permisos por defecto
+umask — permisos por defecto
 ```bash
 
 umask        # ver umask actual: 0022
@@ -107,7 +107,7 @@ umask 077    # cambiar temporalmente (solo dura la sesion actual)
 
 ```
 
-###La umask se resta del maximo posible:
+La umask se resta del maximo posible:
 ```bash
 
 666 - 022 = 644 para archivos nuevos
@@ -119,7 +119,7 @@ Para hacerla permanente hay que agregarla a ~/.bashrc o ~/.bash_profile.
 La umask 077 crea archivos con 600 y directorios con 700 —
 maxima privacidad, solo el dueño tiene acceso.
 
-###Aprendizaje clave
+Aprendizaje clave
 
 Los permisos en Linux son la primera linea de defensa de seguridad.
 Entender que cada usuario cae en una de tres categorias
