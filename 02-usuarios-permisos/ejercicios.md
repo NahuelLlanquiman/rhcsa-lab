@@ -131,3 +131,97 @@ SSH se niega a usar claves privadas con permisos mas abiertos
 por considerarlas inseguras.
 
 ---
+
+## Clase 6 — Usuarios y grupos
+
+### Archivos clave del sistema de usuarios
+```bash
+/etc/passwd   # informacion de todos los usuarios — 7 campos separados por :
+/etc/shadow   # contrasenas encriptadas — solo root puede leerlo
+/etc/group    # informacion de todos los grupos
+/etc/skel/    # plantilla base copiada al home de cada usuario nuevo
+```
+
+Estructura de /etc/passwd:
+usuario:x:UID:GID:nombre_completo:home:shell
+- x significa que la contrasena esta en /etc/shadow
+- UID 0 = root, 1-999 = sistema, 1000+ = usuarios humanos
+- /sbin/nologin como shell = cuenta de servicio, no puede hacer login
+
+### useradd — crear usuarios
+```bash
+sudo useradd -m -s /bin/bash juan
+# -m crea /home/juan y copia archivos base desde /etc/skel/
+# -s /bin/bash define bash como shell — sin esto puede quedar con sh
+
+sudo useradd -m -s /bin/bash -u 1050 carlos
+# -u 1050 asigna UID especifico — util en el examen RHCSA
+```
+
+### passwd — asignar contrasenas
+```bash
+sudo passwd juan
+# Rocky Linux rechaza contrasenas debiles:
+# - menos de 8 caracteres
+# - que contengan el nombre del usuario
+# - demasiado simples
+# Las contrasenas se guardan encriptadas en /etc/shadow con yescrypt ($y$)
+```
+
+### groupadd — crear grupos
+```bash
+sudo groupadd desarrolladores         # GID asignado automaticamente
+sudo groupadd -g 1100 sistemas        # -g asigna GID especifico
+grep sistemas /etc/group              # verificar: sistemas:x:1100:
+```
+
+### usermod — modificar usuarios
+```bash
+sudo usermod -aG desarrolladores juan
+# -a = append — agrega sin quitar grupos existentes
+# -G = grupos secundarios
+# SIN -a reemplaza todos los grupos — puede quitar acceso a sudo
+
+sudo usermod -L juan    # bloquea cuenta — agrega ! al hash en /etc/shadow
+sudo usermod -U juan    # desbloquea — quita el !
+sudo usermod -s /sbin/nologin juan   # cambia shell a nologin
+sudo usermod -s /bin/bash juan       # vuelve a bash
+```
+
+### userdel — eliminar usuarios
+```bash
+sudo userdel juan       # elimina usuario pero deja /home/juan intacto
+sudo userdel -r maria   # -r elimina usuario Y su home directory
+# Sin -r el home queda huerfano — el dueño aparece como numero (UID)
+# en produccion se preservan los homes por politica de empresa
+```
+
+### Verificacion — siempre al final de cada tarea
+```bash
+id carlos                    # uid, gid y grupos del usuario
+groups carlos                # solo los grupos
+grep carlos /etc/passwd      # entrada completa en passwd
+grep carlos /etc/shadow      # hash de contrasena (requiere sudo)
+grep sistemas /etc/group     # miembros del grupo
+ls -la /home/                # verificar que el home existe
+```
+
+### Escenario RHCSA practicado
+
+Tarea: crear usuario carlos con UID 1050, grupo sistemas con GID 1100,
+agregar carlos al grupo, asignar contrasena.
+
+Resultado verificado:
+uid=1050(carlos) gid=1050(carlos) grupos=1050(carlos),1100(sistemas)
+sistemas:x:1100:carlos
+
+### Aprendizaje clave
+
+El flag -aG en usermod es critico — sin la -a se reemplazan todos
+los grupos del usuario y puede perder acceso a sudo instantaneamente.
+/etc/skel/ es la plantilla de todo usuario nuevo — si necesito que
+todos los usuarios tengan cierta configuracion por defecto la agrego
+ahi antes de crearlos.
+Las cuentas bloqueadas con -L no pierden su contrasena — el !
+es solo una bandera reversible. Util para suspender acceso
+temporalmente sin eliminar la cuenta.
